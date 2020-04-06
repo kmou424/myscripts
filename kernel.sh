@@ -27,7 +27,7 @@
 KERNEL_DIR=$PWD
 
 # The name of the Kernel, to name the ZIP
-ZIPNAME="azure"
+ZIPNAME="Marisa"
 
 # The name of the device for which the kernel is built
 MODEL="Redmi Note 7 Pro"
@@ -43,7 +43,7 @@ DEFCONFIG=vendor/violet-perf_defconfig
 INCREMENTAL=1
 
 # Push ZIP to Telegram. 1 is YES | 0 is NO(default)
-PTTG=1
+PTTG=0
 	if [ $PTTG = 1 ]
 	then
 		# Set Telegram Chat ID
@@ -220,13 +220,13 @@ function build_kernel {
 ##--------------------------------------------------------------##
 
 function gen_zip {
-	mv "$KERNEL_DIR"/out/arch/arm64/boot/Image.gz-dtb AnyKernel2/Image.gz-dtb
+	mv "$KERNEL_DIR"/out/arch/arm64/boot/Image.gz-dtb flasher/Image.gz-dtb
 	if [ $BUILD_DTBO = 1 ]
 	then
-		mv "$KERNEL_DIR"/out/arch/arm64/boot/dtbo.img AnyKernel2/dtbo.img
+		mv "$KERNEL_DIR"/out/arch/arm64/boot/dtbo.img flasher/dtbo.img
 	fi
-	cd AnyKernel2 || exit
-	zip -r9 $ZIPNAME-$DEVICE-"$DATE" * -x .git README.md
+	cd flasher || exit
+	zip -r9 $1 * -x .git README.md
 
 	if [ $SIGN = 1 ]
 	then
